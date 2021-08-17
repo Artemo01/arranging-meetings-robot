@@ -1,24 +1,84 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import CalendarPage from './components/Calendar';
+import MeetingForm from './components/MeetingForm';
+import Summary from './components/Summary';
+import TimeSelection from './components/TimeSelection';
+import MeetingHours from './data/mock_data (1).json';
 
 function App() {
+
+  const [curretStep, setCurrentStep] = useState(1);
+
+  const [meetingDate, setMeetingDate] = useState("");
+
+  const [meetingHour, setMeetingHour] = useState("");
+
+  const [requireMessage, setRequireMessage] = useState("");
+
+  //FORM PAGE INFORMATIONS
+  const [userName, setUserName] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+
+  const updateStep = () => {
+    setCurrentStep(prevVal  => prevVal + 1)
+  }
+
+  const backStep = () => {
+    setCurrentStep(prevVal => prevVal - 1);
+    setRequireMessage("");
+  }
+
+  const updateMeetingDate = (date: string) => {
+    setMeetingDate(date)
+    setCurrentStep(prevVal  => prevVal + 1)
+  }
+
+  const updateMeetingHour = (hour: string) => {
+    setMeetingHour(hour)
+    setCurrentStep(prevVal  => prevVal + 1)
+  }
+
+  const updateName = (name:string) => {
+    setUserName(name);
+  }
+  const updatePhoneNumber = (number:string) => {
+    setUserPhoneNumber(number);
+  }
+  const updateEmail = (email:string) => {
+    setUserEmail(email);
+  }
+
+  const formSubmit = () => {
+    if(userName === "" || userPhoneNumber === "" || userEmail === ""){
+      setCurrentStep(prevVal  => prevVal + 0);
+      //alert("Proszę wypełnić wszystkie pola");
+      setRequireMessage("Wymagane");
+    }
+    else{
+      setCurrentStep(prevVal  => prevVal + 1)
+    }
+  }
+
+  const summaryBack = () => {
+    setCurrentStep(prevVal  => prevVal - 1);
+    setUserName("");
+    setUserEmail("");
+    setUserPhoneNumber("");
+    setRequireMessage("");
+  }
+  let selectedItem = MeetingHours.find(item => item.date === meetingDate);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="ComponentBox">
+        {curretStep === 1 && <CalendarPage updateStep={updateStep} updateMeetingDate={updateMeetingDate} selectedItem={selectedItem}/>}
+        {curretStep === 2 && <TimeSelection updateStep={updateStep} backStep={backStep} meetingDate={meetingDate} selectedItem={selectedItem} updateMeetingHour={updateMeetingHour}/>}
+        {curretStep === 3 && <MeetingForm formSubmit={formSubmit} backStep={backStep} updateName={updateName} updatePhoneNumber={updatePhoneNumber} updateEmail={updateEmail} requireMessage={requireMessage}/>}
+        {curretStep === 4 && <Summary summaryBack={summaryBack} meetingDate={meetingDate} meetingHour={meetingHour} userName={userName} userPhoneNumber={userPhoneNumber} userEmail={userEmail}/>}
+      </div>
     </div>
   );
 }
