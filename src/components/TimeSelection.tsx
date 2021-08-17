@@ -1,22 +1,16 @@
 import '../App.css';
-import MeetingHours from '../data/mock_data (1).json';
 import '../App.css';
-//import moment from 'moment';
-
+import { ReactNode } from 'react';
 interface ITimeSelection
 {
-    updateStep: ()=>void;
     backStep: ()=>void;
-    meetingDate: string;
     selectedItem: any;
-    updateMeetingHour: (hour:string) => void;
+    dispalyHoursButtons: ()=> ReactNode;
 }
 
 // "2021-08-13"
 
-function TimeSelection({updateStep, backStep, meetingDate, selectedItem, updateMeetingHour}: ITimeSelection){
-
-    //let selectedItem = MeetingHours.find(item => item.date === meetingDate);
+function TimeSelection({ backStep, selectedItem, dispalyHoursButtons}: ITimeSelection){
 
     return(
         <div>
@@ -29,9 +23,8 @@ function TimeSelection({updateStep, backStep, meetingDate, selectedItem, updateM
                 })}
             </div> */}
             <div className="btns-time-selection">
-                {MeetingHours.filter(({date}) => date === selectedItem?.date)
-                .map(({meetings}) => 
-                    meetings.map((param) => <button className="btn" onClick={()=>{updateMeetingHour(param.start + " - " + param.end)}}>{param.start}-{param.end}</button>))}
+                {dispalyHoursButtons()}
+
             </div>
 
             <div className="back-btn-container">

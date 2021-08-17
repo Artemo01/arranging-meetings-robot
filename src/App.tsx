@@ -20,11 +20,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
   const [userEmail, setUserEmail] = useState("");
-
-
-  const updateStep = () => {
-    setCurrentStep(prevVal  => prevVal + 1)
-  }
+  //######################
 
   const backStep = () => {
     setCurrentStep(prevVal => prevVal - 1);
@@ -53,8 +49,6 @@ function App() {
 
   const formSubmit = () => {
     if(userName === "" || userPhoneNumber === "" || userEmail === ""){
-      setCurrentStep(prevVal  => prevVal + 0);
-      //alert("Proszę wypełnić wszystkie pola");
       setRequireMessage("Wymagane");
     }
     else{
@@ -69,13 +63,22 @@ function App() {
     setUserPhoneNumber("");
     setRequireMessage("");
   }
-  let selectedItem = MeetingHours.find(item => item.date === meetingDate);
+
+  const selectedItem = MeetingHours.find(item => item.date === meetingDate);
+
+  const dates = MeetingHours.map((meetingHour) => (meetingHour.date));
+
+  const dispalyHoursButtons = () => {
+    return MeetingHours.filter(({date}) => date === selectedItem?.date)
+                .map(({meetings}) => 
+                    meetings.map((param) => (<button className="btn" onClick={()=>{updateMeetingHour(param.start + " - " + param.end)}}>{param.start}-{param.end}</button>)))
+  }
 
   return (
     <div className="App">
       <div className="ComponentBox">
-        {curretStep === 1 && <CalendarPage updateStep={updateStep} updateMeetingDate={updateMeetingDate} selectedItem={selectedItem}/>}
-        {curretStep === 2 && <TimeSelection updateStep={updateStep} backStep={backStep} meetingDate={meetingDate} selectedItem={selectedItem} updateMeetingHour={updateMeetingHour}/>}
+        {curretStep === 1 && <CalendarPage updateMeetingDate={updateMeetingDate} selectedItem={selectedItem} dates={dates}/>}
+        {curretStep === 2 && <TimeSelection backStep={backStep} selectedItem={selectedItem} dispalyHoursButtons={dispalyHoursButtons}/>}
         {curretStep === 3 && <MeetingForm formSubmit={formSubmit} backStep={backStep} updateName={updateName} updatePhoneNumber={updatePhoneNumber} updateEmail={updateEmail} requireMessage={requireMessage}/>}
         {curretStep === 4 && <Summary summaryBack={summaryBack} meetingDate={meetingDate} meetingHour={meetingHour} userName={userName} userPhoneNumber={userPhoneNumber} userEmail={userEmail}/>}
       </div>
