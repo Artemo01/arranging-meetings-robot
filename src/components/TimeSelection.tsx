@@ -5,12 +5,12 @@ interface ITimeSelection
 {
     backStep: ()=>void;
     selectedItem: any;
-    dispalyHoursButtons: ()=> ReactNode;
+    displayHoursButtons: ()=> ReactNode;
 }
 
 // "2021-08-13"
 
-function TimeSelection({ backStep, selectedItem, dispalyHoursButtons}: ITimeSelection){
+const TimeSelection:React.FC<ITimeSelection> = ({ backStep, selectedItem, displayHoursButtons}) => {
 
     return(
         <div>
@@ -23,7 +23,7 @@ function TimeSelection({ backStep, selectedItem, dispalyHoursButtons}: ITimeSele
                 })}
             </div> */}
             <div className="btns-time-selection">
-                {dispalyHoursButtons()}
+                {displayHoursButtons()}
 
             </div>
 

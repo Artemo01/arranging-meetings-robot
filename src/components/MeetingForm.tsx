@@ -1,4 +1,5 @@
 import React from "react";
+//import { useState } from "react";
 interface IMeetingForm
 {
     //updateStep: ()=>void;
@@ -10,7 +11,10 @@ interface IMeetingForm
     requireMessage: string;
 }
 
-function MeetingForm({backStep, updateName, updateEmail, updatePhoneNumber, formSubmit, requireMessage}: IMeetingForm) {
+const MeetingForm:React.FC<IMeetingForm> = ({backStep, updateName, updateEmail, updatePhoneNumber, formSubmit, requireMessage}) => {
+
+    //const [saveName, setSaveName] = useState("");
+
     return(
         <div>
             <h1 className="page-title">Formularz do spotkania</h1>

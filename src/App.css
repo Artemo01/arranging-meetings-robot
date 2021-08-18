@@ -133,6 +133,11 @@
   margin-left: 140px;
   margin-top: 80px
 }
+.summary-container-details{
+  display: flex;
+  flex-direction: column;
+
+}
 
 .back-btn-container {
   display: flex;

@@ -11,7 +11,7 @@ interface ICalendarPage
     dates: string[];
 }
 
-function CalendarPage({updateMeetingDate, selectedItem, dates}: ICalendarPage){
+const CalendarPage:React.FC<ICalendarPage> = ({updateMeetingDate, selectedItem, dates}) =>{
 
     const [value, onChange] = useState(new Date());
     
