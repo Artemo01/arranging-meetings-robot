@@ -41,15 +41,18 @@ function App() {
   const backStep = () => {
     setCurrentStep(prevVal => prevVal - 1);
   }
+  const nextStep = () => {
+    setCurrentStep(prevVal => prevVal + 1);
+  }
 
   const updateMeetingDate = (date: string) => {
     setMeetingDate(date)
-    setCurrentStep(prevVal  => prevVal + 1)
+    nextStep()
   }
 
   const updateMeetingHour = (hour: string) => {
     setMeetingHour(hour)
-    setCurrentStep(prevVal  => prevVal + 1)
+    nextStep()
   }
 
   // const updateName = (name:string) => {
@@ -72,14 +75,10 @@ function App() {
       comment: data.comment
     }; 
     setSavedSummary(summary);
-    setCurrentStep(prevVal => prevVal + 1);
+    nextStep()
     // setSavedName(userName);
     // setSavedEmail(userEmail);
     // setSavedPhoneNumber(userPhoneNumber);
-  }
-
-  const summaryBack = () => {
-    setCurrentStep(prevVal  => prevVal - 1);
   }
 
   const displayHoursButtons = () => {
@@ -101,7 +100,7 @@ function App() {
         {currentStep === selectedPage.CalendarPage && <CalendarPage updateMeetingDate={updateMeetingDate} dates={dates}/>}
         {currentStep === selectedPage.TimeSelectionPage && <TimeSelection backStep={backStep} selectedItem={selectedItem} displayHoursButtons={displayHoursButtons}/>}
         {currentStep === selectedPage.MeetingFormPage && <MeetingForm backStep={backStep} updateSummary={updateSummary}/>}
-        {currentStep === selectedPage.SummaryPage && <Summary summaryBack={summaryBack} summary={savedSummary}/>}
+        {currentStep === selectedPage.SummaryPage && <Summary backStep={backStep} summary={savedSummary}/>}
       </div>
     </div>
   );

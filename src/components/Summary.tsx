@@ -1,11 +1,11 @@
 import {ISavedSummary} from "../App";
 interface ISummary
 {
-    summaryBack: () => void;
+    backStep: () => void;
     summary: ISavedSummary | undefined;
 
 }
-const Summary:React.FC<ISummary> = ({summaryBack, summary}) => {
+const Summary:React.FC<ISummary> = ({backStep, summary}) => {
     return(
         <div>
             <h1 className="page-title">Podsumowanie</h1>
@@ -17,7 +17,7 @@ const Summary:React.FC<ISummary> = ({summaryBack, summary}) => {
                 <label>Godzina: {summary?.hour}</label>
                 <label>Komentarz: {summary?.comment}</label>            
             </div>
-            <button className="btn" onClick={summaryBack}>Cofnij</button>
+            <button className="btn" onClick={backStep}>Cofnij</button>
         </div>
     )
 }
