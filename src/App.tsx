@@ -12,13 +12,14 @@ export interface ISavedSummary {
   phone: string;
   date: string;
   hour: string;
+  comment: string;
 }
 
 export interface ITakeDetails {
   name: string;
   email: string;
   phone: string;
-  comment?: string;
+  comment: string;
 }
 
 function App() {
@@ -63,7 +64,8 @@ function App() {
       email: data.email,
       phone: data.phone,
       date: meetingDate,
-      hour: meetingHour
+      hour: meetingHour,
+      comment: data.comment
     }; 
     setSavedSummary(summary);
     setCurrentStep(prevVal => prevVal + 1);
@@ -96,7 +98,7 @@ function App() {
   return (
     <div className="App">
       <div className="ComponentBox">
-        {currentStep === selectedPage.CalendarPage && <CalendarPage updateMeetingDate={updateMeetingDate} selectedItem={selectedItem} dates={dates}/>}
+        {currentStep === selectedPage.CalendarPage && <CalendarPage updateMeetingDate={updateMeetingDate} dates={dates}/>}
         {currentStep === selectedPage.TimeSelectionPage && <TimeSelection backStep={backStep} selectedItem={selectedItem} displayHoursButtons={displayHoursButtons}/>}
         {currentStep === selectedPage.MeetingFormPage && <MeetingForm backStep={backStep} updateSummary={updateSummary}/>}
         {currentStep === selectedPage.SummaryPage && <Summary summaryBack={summaryBack} summary={savedSummary}/>}

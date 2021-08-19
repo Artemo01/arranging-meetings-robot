@@ -14,73 +14,59 @@ const MeetingForm:React.FC<IMeetingForm> = ({backStep, updateSummary}) => {
     const [saveName, setSaveName] = useState("");
     const [savePhone, setSavePhone] = useState("");
     const [saveEmail, setSaveEmail] = useState("");
+    const [saveComment, setSaveComment] = useState("---");
 
-    //const [requireMessage, setRequireMessage] = useState("");
-    const [incorrectName, setIncorrectName] = useState("")
-    const [incorrectEmail, setIncorrectEmail] = useState("")
-    const [incorrectPhone, setIncorrectPhone] = useState("")
+    //const [btnColour, setBtnColour] = useState("rgb(189, 146, 230)")
+
+    const isNameValid = (name: string): boolean => saveName !== "";
+
+    const isPhoneValid = (phone: string): boolean => savePhone.length === 9;
+
+    const isEmailValid = (email: string): boolean => (saveEmail.includes("@"));
+
+    const isDataValid = isNameValid(saveName) && isPhoneValid(savePhone) && isEmailValid(saveEmail); 
 
     const submit = () => {
-        if(saveName === "" || savePhone === "" || saveEmail === ""){
-            setIncorrectName("Wymagane")
-            setIncorrectEmail("Wymagane")
-            setIncorrectPhone("Wymagane")
-        }
-        else if(savePhone.length > 9 || savePhone.length < 9){
-            setIncorrectPhone("niepoprawny numer")
-            setIncorrectName("")
-            setIncorrectEmail("")
-        }
-        else if(!saveEmail.includes("@")){
-            setIncorrectPhone("")
-            setIncorrectName("")
-            setIncorrectEmail("Niepoprawny email")
-        }
-        else{
-            // updateName(saveName);
-            // updateEmail(saveEmail);
-            // updatePhoneNumber(savePhone);
-            const details: ITakeDetails = {
-                name: saveName,
-                email: saveEmail,
-                phone: savePhone,
-                comment: ""
-              }; 
-            updateSummary(details);
-            // nextStep()
-        }
+        const details: ITakeDetails = {
+            name: saveName,
+            email: saveEmail,
+            phone: savePhone,
+            comment: saveComment
+        }; 
+        updateSummary(details);
     }
 
     return(
         <div>
             <h1 className="page-title">Formularz do spotkania</h1>
             <div className="form-container">
+                
                 <div className="message-warning-box">
-                    {incorrectName}
+                    {isNameValid(saveName) ? "" : "wymagane"}
                 </div>
                 <div className="input-box">
                     *
                     <input className="inputClass" placeholder="Imię i Nazwisko" onChange={e =>setSaveName(e.target.value)}/>
                 </div>
                 <div className="message-warning-box">
-                    {incorrectPhone}
+                    {isPhoneValid(savePhone) ? "" : "niepoprawny numer"}
                 </div>
                 <div className="input-box">
                     *
                     <input type="number" className="inputClass" placeholder="Numer telefonu" onChange={e=>setSavePhone(e.target.value)}/>
                 </div>
                 <div className="message-warning-box">
-                    {incorrectEmail}
+                    {isEmailValid(saveEmail) ? "" : "niepoprawny email"}
                 </div>
                 <div className="input-box">
                     *
                     <input type="email" className="inputClass" placeholder="Email" onChange={e=>setSaveEmail(e.target.value)}/>
                 </div>
-                <textarea className="text-area" placeholder="Notatka"/>
+                <textarea className="text-area" placeholder="Notatka" onChange={e=>setSaveComment(e.target.value)}/>
             </div>
             <div className="form-buttons">
-                <button type="submit" className="btn-form" onClick={submit}>Potwiedź</button>
-                <button className="btn-form" onClick={backStep}>Cofnij</button>
+                <button type="submit" className={isDataValid ? "btn-form-enable" : "btn-form-disable"}  onClick={submit}>Potwiedź</button>
+                <button className="btn-form-back" onClick={backStep}>Cofnij</button>
             </div>
         </div>
     )

@@ -7,11 +7,10 @@ import moment from 'moment';
 interface ICalendarPage
 {
     updateMeetingDate: (date:string)=>void;
-    selectedItem: any;
     dates: string[];
 }
 
-const CalendarPage:React.FC<ICalendarPage> = ({updateMeetingDate, selectedItem, dates}) =>{
+const CalendarPage:React.FC<ICalendarPage> = ({updateMeetingDate, dates}) =>{
 
     const [value, onChange] = useState(new Date());
     
@@ -23,9 +22,7 @@ const CalendarPage:React.FC<ICalendarPage> = ({updateMeetingDate, selectedItem, 
                     onChange={onChange}
                     value={value}
                     onClickDay={(value) => {updateMeetingDate(moment(value).format('YYYY-MM-DD'))}}
-                    tileDisabled={({date}) => !dates.includes(moment(date).format('YYYY-MM-DD'))
-                        
-                    }
+                    tileDisabled={({date}) => !dates.includes(moment(date).format('YYYY-MM-DD'))}
                 />
                 {/* {console.log(value)}
                 <p>{moment(value).format('YYYY-MM-DD')}</p> */}

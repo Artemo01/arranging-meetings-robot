@@ -33,7 +33,33 @@
   padding: 10px;
 }
 
-.btn-form {
+.btn-form-enable {
+  background-color: blueviolet;
+  width: 150px;
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  margin: 10px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.btn-form-disable {
+  background-color: rgb(189, 146, 230);
+  width: 150px;
+  height: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  margin: 10px;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.btn-form-back {
   background-color: blueviolet;
   width: 150px;
   height: 50px;
