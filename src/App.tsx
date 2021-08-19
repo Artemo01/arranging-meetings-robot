@@ -6,7 +6,24 @@ import Summary from './components/Summary';
 import TimeSelection from './components/TimeSelection';
 import MeetingHours from './data/mock_data (1).json';
 
+export interface ISavedSummary {
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  hour: string;
+}
+
+export interface ITakeDetails {
+  name: string;
+  email: string;
+  phone: string;
+  comment?: string;
+}
+
 function App() {
+
+  //const [requireMessage, setRequireMessage] = useState("");
 
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -14,21 +31,10 @@ function App() {
 
   const [meetingHour, setMeetingHour] = useState("");
 
-  const [requireMessage, setRequireMessage] = useState("");
-
-  //FORM PAGE INFORMATIONS
-  const [userName, setUserName] = useState("");
-  const [userPhoneNumber, setUserPhoneNumber] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  //######################
-
-  const [savedName, setSavedName] = useState("");
-  const [savedEmail, setSavedEmail] = useState("");
-  const [savedPhoneNumber, setSavedPhoneNumber] = useState("");
+  const [savedSummary, setSavedSummary] = useState<ISavedSummary>();
 
   const backStep = () => {
     setCurrentStep(prevVal => prevVal - 1);
-    setRequireMessage("");
   }
 
   const updateMeetingDate = (date: string) => {
@@ -41,38 +47,33 @@ function App() {
     setCurrentStep(prevVal  => prevVal + 1)
   }
 
-  const updateName = (name:string) => {
-    setUserName(name);
-  }
-  const updatePhoneNumber = (number:string) => {
-    setUserPhoneNumber(number);
-  }
-  const updateEmail = (email:string) => {
-    setUserEmail(email);
-  }
+  // const updateName = (name:string) => {
+  //   setUserName(name);
+  // }
+  // const updatePhoneNumber = (number:string) => {
+  //   setUserPhoneNumber(number);
+  // }
+  // const updateEmail = (email:string) => {
+  //   setUserEmail(email);
+  // }
 
-  const updateSummary = () => {
-    setSavedName(userName);
-    setSavedEmail(userEmail);
-    setSavedPhoneNumber(userPhoneNumber);
-  }
-
-  const formSubmit = () => {
-    if(userName === "" || userPhoneNumber === "" || userEmail === ""){
-      setRequireMessage("Wymagane");
-    }
-    else{
-      updateSummary();
-      setCurrentStep(prevVal  => prevVal + 1)
-    }
+  const updateSummary = (data: ITakeDetails) => {
+    const summary: ISavedSummary = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      date: meetingDate,
+      hour: meetingHour
+    }; 
+    setSavedSummary(summary);
+    setCurrentStep(prevVal => prevVal + 1);
+    // setSavedName(userName);
+    // setSavedEmail(userEmail);
+    // setSavedPhoneNumber(userPhoneNumber);
   }
 
   const summaryBack = () => {
     setCurrentStep(prevVal  => prevVal - 1);
-    setUserName("");
-    setUserEmail("");
-    setUserPhoneNumber("");
-    setRequireMessage("");
   }
 
   const selectedItem = MeetingHours.find(item => item.date === meetingDate);
@@ -92,25 +93,13 @@ function App() {
     SummaryPage
   }
 
-  const displaySummary = () => {
-    return(
-      <div className="summary-container-details">
-        <label>Imię i Nazwisko: {savedName}</label>
-        <label>Numer telefonu: {savedPhoneNumber}</label>
-        <label>Email: {savedEmail}</label>
-        <label>Data: {meetingDate}</label>
-        <label>Godzina: {meetingHour}</label>
-      </div>
-    )
-  }
-
   return (
     <div className="App">
       <div className="ComponentBox">
         {currentStep === selectedPage.CalendarPage && <CalendarPage updateMeetingDate={updateMeetingDate} selectedItem={selectedItem} dates={dates}/>}
         {currentStep === selectedPage.TimeSelectionPage && <TimeSelection backStep={backStep} selectedItem={selectedItem} displayHoursButtons={displayHoursButtons}/>}
-        {currentStep === selectedPage.MeetingFormPage && <MeetingForm formSubmit={formSubmit} backStep={backStep} updateName={updateName} updatePhoneNumber={updatePhoneNumber} updateEmail={updateEmail} requireMessage={requireMessage}/>}
-        {currentStep === selectedPage.SummaryPage && <Summary summaryBack={summaryBack} displaySummary={displaySummary}/>}
+        {currentStep === selectedPage.MeetingFormPage && <MeetingForm backStep={backStep} updateSummary={updateSummary}/>}
+        {currentStep === selectedPage.SummaryPage && <Summary summaryBack={summaryBack} summary={savedSummary}/>}
       </div>
     </div>
   );
