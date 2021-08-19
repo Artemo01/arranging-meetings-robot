@@ -65,7 +65,7 @@ const MeetingForm:React.FC<IMeetingForm> = ({backStep, updateSummary}) => {
                 <textarea className="text-area" placeholder="Notatka" onChange={e=>setSaveComment(e.target.value)}/>
             </div>
             <div className="form-buttons">
-                <button type="submit" className={isDataValid ? "btn-form-enable" : "btn-form-disable"}  onClick={submit}>Potwiedź</button>
+                <button type="submit" className={isDataValid ? "btn-form-enable" : "btn-form-disable"}  onClick={submit}>Potwierdź</button>
                 <button className="btn-form-back" onClick={backStep}>Cofnij</button>
             </div>
         </div>

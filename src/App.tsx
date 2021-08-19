@@ -34,6 +34,10 @@ function App() {
 
   const [savedSummary, setSavedSummary] = useState<ISavedSummary>();
 
+  const selectedItem = MeetingHours.find(item => item.date === meetingDate);
+
+  const dates = MeetingHours.map((meetingHour) => (meetingHour.date));
+
   const backStep = () => {
     setCurrentStep(prevVal => prevVal - 1);
   }
@@ -77,10 +81,6 @@ function App() {
   const summaryBack = () => {
     setCurrentStep(prevVal  => prevVal - 1);
   }
-
-  const selectedItem = MeetingHours.find(item => item.date === meetingDate);
-
-  const dates = MeetingHours.map((meetingHour) => (meetingHour.date));
 
   const displayHoursButtons = () => {
     return MeetingHours.filter(({date}) => date === selectedItem?.date)
