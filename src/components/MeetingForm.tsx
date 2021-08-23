@@ -4,7 +4,6 @@ import { ITakeDetails } from "../App";
 
 interface IMeetingForm
 {
-    //updateStep: ()=>void;
     backStep: () => void;
     updateSummary: (data: ITakeDetails) => void;
 }
@@ -15,8 +14,6 @@ const MeetingForm:React.FC<IMeetingForm> = ({backStep, updateSummary}) => {
     const [savePhone, setSavePhone] = useState("");
     const [saveEmail, setSaveEmail] = useState("");
     const [saveComment, setSaveComment] = useState("---");
-
-    //const [btnColour, setBtnColour] = useState("rgb(189, 146, 230)")
 
     const isNameValid = (name: string): boolean => saveName !== "";
 
@@ -38,7 +35,7 @@ const MeetingForm:React.FC<IMeetingForm> = ({backStep, updateSummary}) => {
 
     return(
         <div>
-            <h1 className="page-title">Formularz do spotkania</h1>
+            <h2 className="page-title">Formularz do spotkania</h2>
             <div className="form-container">
                 
                 <div className="message-warning-box">

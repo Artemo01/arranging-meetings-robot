@@ -3,8 +3,8 @@ interface ISummary
 {
     backStep: () => void;
     summary: ISavedSummary | undefined;
-
 }
+
 const Summary:React.FC<ISummary> = ({backStep, summary}) => {
     return(
         <div>

@@ -24,11 +24,6 @@ const CalendarPage:React.FC<ICalendarPage> = ({updateMeetingDate, dates}) =>{
                     onClickDay={(value) => {updateMeetingDate(moment(value).format('YYYY-MM-DD'))}}
                     tileDisabled={({date}) => !dates.includes(moment(date).format('YYYY-MM-DD'))}
                 />
-                {/* {console.log(value)}
-                <p>{moment(value).format('YYYY-MM-DD')}</p> */}
-                {/* <p>{moment(value).format('D')}</p> */}
-                {/* <p>{value.toString()}</p> */}
-                {/* <button className="btn-calendar" onClick={updateStep}>Dalej</button> */}
             </div>
         </div>
     )

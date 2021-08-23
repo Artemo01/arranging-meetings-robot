@@ -6,7 +6,6 @@ interface ITimeSelection
     updateMeetingHour: (param: string)=>void;
     filterHours: {start: string; end: string}[];
 }
-// "2021-08-13"
 
 const TimeSelection:React.FC<ITimeSelection> = ({ backStep, selectedItem, updateMeetingHour, filterHours}) => {
 
