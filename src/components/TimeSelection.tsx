@@ -1,16 +1,14 @@
 import '../App.css';
-import '../App.css';
-import { ReactNode } from 'react';
 interface ITimeSelection
 {
     backStep: ()=>void;
     selectedItem: any;
-    displayHoursButtons: ()=> ReactNode;
+    updateMeetingHour: (param: string)=>void;
+    filterHours: {start: string; end: string}[];
 }
-
 // "2021-08-13"
 
-const TimeSelection:React.FC<ITimeSelection> = ({ backStep, selectedItem, displayHoursButtons}) => {
+const TimeSelection:React.FC<ITimeSelection> = ({ backStep, selectedItem, updateMeetingHour, filterHours}) => {
 
     return(
         <div>
@@ -23,7 +21,7 @@ const TimeSelection:React.FC<ITimeSelection> = ({ backStep, selectedItem, displa
                 })}
             </div> */}
             <div className="btns-time-selection">
-                {displayHoursButtons()}
+                {filterHours.map((param) => (<button className="btn" onClick={()=>{updateMeetingHour(`${param.start}-${param.end}`)}}>{param.start}-{param.end}</button>))}
 
             </div>
 

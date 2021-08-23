@@ -24,8 +24,6 @@ export interface ITakeDetails {
 
 function App() {
 
-  //const [requireMessage, setRequireMessage] = useState("");
-
   const [currentStep, setCurrentStep] = useState(0);
 
   const [meetingDate, setMeetingDate] = useState("");
@@ -37,6 +35,8 @@ function App() {
   const selectedItem = MeetingHours.find(item => item.date === meetingDate);
 
   const dates = MeetingHours.map((meetingHour) => (meetingHour.date));
+
+  //const [datesFilter, setDatesFilter] = useState();
 
   const backStep = () => {
     setCurrentStep(prevVal => prevVal - 1);
@@ -55,16 +55,6 @@ function App() {
     nextStep()
   }
 
-  // const updateName = (name:string) => {
-  //   setUserName(name);
-  // }
-  // const updatePhoneNumber = (number:string) => {
-  //   setUserPhoneNumber(number);
-  // }
-  // const updateEmail = (email:string) => {
-  //   setUserEmail(email);
-  // }
-
   const updateSummary = (data: ITakeDetails) => {
     const summary: ISavedSummary = {
       name: data.name,
@@ -74,18 +64,19 @@ function App() {
       hour: meetingHour,
       comment: data.comment
     }; 
-    setSavedSummary(summary);
-    nextStep()
-    // setSavedName(userName);
-    // setSavedEmail(userEmail);
-    // setSavedPhoneNumber(userPhoneNumber);
+    if(data.name !== "" && data.email !== "" && data.phone.length === 9 && data.phone !== ""){
+      setSavedSummary(summary);
+      nextStep()
+    }
   }
 
-  const displayHoursButtons = () => {
-    return MeetingHours.filter(({date}) => date === selectedItem?.date)
-                .map(({meetings}) => 
-                    meetings.map((param) => (<button className="btn" onClick={()=>{updateMeetingHour(`${param.start}-${param.end}`)}}>{param.start}-{param.end}</button>)))
-  }
+  const filterHours = MeetingHours.find((day) => (day.date === meetingDate))?.meetings;
+
+  // const displayHoursButtons = () => {
+  //   return MeetingHours.filter(({date}) => date === selectedItem?.date)
+  //               .map(({meetings}) => 
+  //                   meetings.map((param) => (<button className="btn" onClick={()=>{updateMeetingHour(`${param.start}-${param.end}`)}}>{param.start}-{param.end}</button>)))
+  // }
 
   enum selectedPage{
     CalendarPage,
@@ -98,7 +89,7 @@ function App() {
     <div className="App">
       <div className="ComponentBox">
         {currentStep === selectedPage.CalendarPage && <CalendarPage updateMeetingDate={updateMeetingDate} dates={dates}/>}
-        {currentStep === selectedPage.TimeSelectionPage && <TimeSelection backStep={backStep} selectedItem={selectedItem} displayHoursButtons={displayHoursButtons}/>}
+        {currentStep === selectedPage.TimeSelectionPage && <TimeSelection backStep={backStep} selectedItem={selectedItem} updateMeetingHour={updateMeetingHour} filterHours={filterHours ? filterHours : []}/>}
         {currentStep === selectedPage.MeetingFormPage && <MeetingForm backStep={backStep} updateSummary={updateSummary}/>}
         {currentStep === selectedPage.SummaryPage && <Summary backStep={backStep} summary={savedSummary}/>}
       </div>
